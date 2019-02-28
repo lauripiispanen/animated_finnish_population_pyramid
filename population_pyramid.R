@@ -26,7 +26,7 @@ animate(ggplot(population_data, aes(x = AgeGroup, fill = Gender)) +
   geom_col(data = subset(population_data, Gender == "Naiset"), aes(y=Population)) +
   geom_col(data = subset(population_data, Gender == "Miehet"), aes(y=Population*(-1))) +
   coord_flip() +
-  labs(title = 'Year: {closest_state}') +
+  labs(title = 'Population distribution of Finland (year: {closest_state})') +
   guides(fill = FALSE) +
   scale_y_continuous(labels = label_format) +
   annotate("text", label="Men", x = 1, y = -250000) +
