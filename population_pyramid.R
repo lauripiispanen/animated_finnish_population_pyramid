@@ -18,8 +18,17 @@ population_data <- data.frame(population_data) %>%
          Population = as.numeric(Population),
          AgeGroup = relevel(relevel(AgeGroup, "5 - 9"), "0 - 4"))
 
+label_format <- function(x) {
+  format(abs(x), big.mark = ".", decimal.mark = ",", scientific = FALSE)
+}
+
 animate(ggplot(population_data, aes(x = AgeGroup, fill = Gender)) +
   geom_col(data = subset(population_data, Gender == "Naiset"), aes(y=Population)) +
   geom_col(data = subset(population_data, Gender == "Miehet"), aes(y=Population*(-1))) +
   coord_flip() +
-  transition_states(Year), nframes = 200)
+  labs(title = 'Year: {closest_state}') +
+  guides(fill = FALSE) +
+  scale_y_continuous(labels = label_format) +
+  annotate("text", label="Men", x = 1, y = -250000) +
+  annotate("text", label="Women", x = 1, y = 250000) +
+  transition_states(Year), nframes = 2 * (max(population_data$Year) - min(population_data$Year)))
